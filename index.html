@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-main>
+        <v-toolbar
+        class="primary px-15"
+        flat
+        dark
+
+      >
+      <h3>Budget Calculator</h3>
+      </v-toolbar>
+        <v-container>
+
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+                >
+                <v-row>
+                    <v-col>
+                        <p class="font-weight-bold">Name</p>
+                        <v-text-field
+                        v-model="name"
+                        label="Enter your Name"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                </v-row>
+
+                <v-row>
+                    <v-col>
+                        <p class="font-weight-bold">Age</p>
+                        <v-text-field
+                        v-model="age"
+                        label="Age"
+                        type="Enter your Age"
+                        required
+                      ></v-text-field>
+    
+                    </v-col>
+                </v-row>
+
+                <v-row>
+                    <v-col>
+                        <p class="font-weight-bold">Email</p>
+                        <v-text-field
+                        v-model="email"
+                        :rules="emailRules"
+                        label="Enter your Email"
+                        required
+                      ></v-text-field>
+                  
+    
+                    </v-col>
+                </v-row>
+
+
+                
+              
+                <v-row>
+                    <v-col>
+                        <p class="font-weight-bold">City / State</p>
+                        <v-autocomplete
+                        v-model="city"
+                        :items="cities"
+                        item-text="city"
+                        item-value="city"
+                        :rules="[v => !!v || 'Item is required']"
+                        label="city"
+                        required
+                      ></v-autocomplete>
+                    </v-col>
+                </v-row>
+
+                <v-row>
+                    <v-col cols="2" class="mt-5">
+                        <p class="font-weight-bold">Budget experience</p>
+                    </v-col>
+                    <v-col cols="2">
+
+                    <v-checkbox v-model="eliminate_debt"
+                    label="eliminate debt"
+                    ></v-checkbox>
+                    <v-checkbox v-model="build_savings"
+                    label="build savings"
+                    ></v-checkbox>
+                    </v-col>
+                   
+                    <v-col cols="3">
+
+                    <v-checkbox v-model="build_savings"
+                    label="build emergency fund"
+                    ></v-checkbox>
+                    <v-checkbox v-model="build_savings"
+                    label="save for retirement"
+                    ></v-checkbox>
+                    </v-col>
+
+                    <v-col cols="3">
+
+                    <v-checkbox v-model="build_savings"
+                    label="budget for vacations/getaways"
+                    ></v-checkbox>
+                    </v-col>
+
+                </v-row>
+
+                <v-row>
+                    <v-col>
+                        <p class="font-weight-bold">Budget experience</p>
+        
+                          <v-slider  
+                          v-model="be"
+                          :tick-labels="bes"
+                          min="1"
+                          max="5"
+                          step="1">
+                         
+                        </v-slider>
+        
+                    </v-col>
+                </v-row>
+                <v-row class="mt-15">
+                    <v-col>
+                        <p class="font-weight-bold">Savings, debt, emergency funding, retirement knowledge</p>
+        
+                          <v-slider  
+                          v-model="be"
+                          :tick-labels="bes"
+                          min="1"
+                          max="5"
+                          step="1">
+                         
+                        </v-slider>
+        
+                    </v-col>
+                </v-row>
+                </v-form>
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data :{
+
+        bes : ['1','2','3','4','5'],  
+        be : '',
+        name : '',
+        email : '',
+        age : '',
+        city:'',
+        cities : [
+            {city:'city1'},
+            {city:'city2'}
+            ],  
+        valid : false,
+        nameRules: [
+        v => !!v || 'Name is required',
+      ],
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      },
+      methods: {
+     
+    },
+    })
+  </script>
+</body>
+</html>
