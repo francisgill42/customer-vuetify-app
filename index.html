@@ -25,8 +25,8 @@
                   v-model="valid"
                   lazy-validation
                 >
-                <v-row>
-                    <v-col>
+                <v-row class="mt-3"> 
+                    <v-col md="6" sm="12" cols="12">
                         <p class="font-weight-bold">Name</p>
                         <v-text-field
                         v-model="name"
@@ -34,10 +34,8 @@
                         required
                       ></v-text-field>
                     </v-col>
-                </v-row>
-
-                <v-row>
-                    <v-col>
+               
+                    <v-col md="6" sm="12" cols="12">
                         <p class="font-weight-bold">Age</p>
                         <v-text-field
                         v-model="age"
@@ -47,10 +45,7 @@
                       ></v-text-field>
     
                     </v-col>
-                </v-row>
-
-                <v-row>
-                    <v-col>
+                    <v-col md="6" sm="12" cols="12">
                         <p class="font-weight-bold">Email</p>
                         <v-text-field
                         v-model="email"
@@ -58,16 +53,8 @@
                         label="Enter your Email"
                         required
                       ></v-text-field>
-                  
-    
                     </v-col>
-                </v-row>
-
-
-                
-              
-                <v-row>
-                    <v-col>
+                    <v-col md="6" sm="12" cols="12">
                         <p class="font-weight-bold">City / State</p>
                         <v-autocomplete
                         v-model="city"
@@ -81,11 +68,12 @@
                     </v-col>
                 </v-row>
 
+
                 <v-row>
-                    <v-col cols="2" class="mt-5">
-                        <p class="font-weight-bold">Budget experience</p>
+                    <v-col md="2" sm="12" cols="12" class="mt-5">
+                        <p class="font-weight-bold">Financial Goals</p>
                     </v-col>
-                    <v-col cols="2">
+                    <v-col md="2" sm="12" cols="12">
 
                     <v-checkbox v-model="eliminate_debt"
                     label="eliminate debt"
@@ -95,7 +83,7 @@
                     ></v-checkbox>
                     </v-col>
                    
-                    <v-col cols="3">
+                    <v-col md="3" sm="12" cols="12">
 
                     <v-checkbox v-model="build_savings"
                     label="build emergency fund"
@@ -105,7 +93,7 @@
                     ></v-checkbox>
                     </v-col>
 
-                    <v-col cols="3">
+                    <v-col md="3" sm="12" cols="12">
 
                     <v-checkbox v-model="build_savings"
                     label="budget for vacations/getaways"
@@ -144,7 +132,292 @@
         
                     </v-col>
                 </v-row>
-                </v-form>
+               
+                <v-row>
+                    <v-col md="12" sm="12" cols="12">
+                        <p class="font-weight-bold">Income</p>
+                    </v-col>
+
+                    <v-col md="6" sm="12" cols="12">
+                   
+                        <v-text-field
+                        v-model="income_after_tax"
+                        label="Income after Tax	"
+                        type="number"
+                        required
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col md="6" sm="12" cols="12">
+                   
+                        <v-text-field
+                        v-model="contribution"
+                        label="401k contribution (amount taken out of monthly income that contributes to 401k)		"
+                        type="number"
+                        required
+                      ></v-text-field>
+
+                    </v-col>
+                    
+                </v-row>
+
+               
+                <v-row>
+                    <v-col md="12" sm="12" cols="12">
+                   
+                        <p class="font-weight-bold">Expenses (Needs)</p>
+
+                    </v-col>
+                    <v-col md="6" sm="12" cols="12">
+                   
+                        <v-text-field
+                        v-model="income_after_tax"
+                        label="Rent / Modgadge"
+                        type="number"
+                        required
+                      ></v-text-field>
+
+                    </v-col>
+
+                    <v-col md="6" sm="12" cols="12">
+                   
+                        <v-text-field
+                        v-model="income_after_tax"
+                        label="Health Insurance"
+                        type="number"
+                        required
+                      ></v-text-field>
+
+                    </v-col>
+
+                    <v-col md="6" sm="12" cols="12">
+                   
+                        <v-text-field
+                    v-model="income_after_tax"
+                    label="Car auto insurance"
+                    type="number"
+                    required
+                  ></v-text-field>
+
+                    </v-col>
+
+                    <v-col md="6" sm="12" cols="12">
+                   
+                        <v-text-field
+                        v-model="income_after_tax"
+                        label="Gas"
+                        type="number"
+                        required
+                      ></v-text-field>
+
+                    </v-col>
+
+
+                    <v-col md="6" sm="12" cols="12">
+                   
+                      
+                    <v-text-field
+                    v-model="income_after_tax"
+                    label="Utilities"
+                    type="number"
+                    required
+                    ></v-text-field>
+
+                    </v-col>
+
+                    <v-col md="6" sm="12" cols="12">
+                   
+                      
+                        <v-text-field
+              v-model="income_after_tax"
+              label="Phone"
+              type="number"
+              required
+            ></v-text-field>
+    
+                        </v-col>
+
+
+                        <v-col md="6" sm="12" cols="12">
+                   
+                            <v-text-field
+                            v-model="income_after_tax"
+                            label="Minimum car paymnet	"
+                            type="number"
+                            required
+                          ></v-text-field>
+                
+                        
+                            </v-col>
+
+                </v-row>
+            
+                <v-row>
+                <v-col md="12" sm="12" cols="12">
+
+                <p class="font-weight-bold">Expenses (Wants)</p>
+
+                </v-col>
+                <v-col md="6" sm="12" cols="12">
+
+                <v-text-field
+                v-model="income_after_tax"
+                label="Resturants"
+                type="number"
+                required
+                ></v-text-field>
+
+                </v-col>
+
+                <v-col md="6" sm="12" cols="12">
+
+                <v-text-field
+                v-model="income_after_tax"
+                label="Entertainment"
+                type="number"
+                required
+                ></v-text-field>
+
+                </v-col>
+
+                <v-col md="6" sm="12" cols="12">
+
+                <v-text-field
+                v-model="income_after_tax"
+                label="Subscriptions"
+                type="number"
+                required
+                ></v-text-field>
+
+                </v-col>
+
+                <v-col md="6" sm="12" cols="12">
+
+                <v-text-field
+                v-model="income_after_tax"
+                label="Shopping"
+                type="number"
+                required
+                ></v-text-field>
+
+                </v-col>
+
+
+                <v-col md="6" sm="12" cols="12">
+
+
+                <v-text-field
+                v-model="income_after_tax"
+                label="Cloths"
+                type="number"
+                required
+                ></v-text-field>
+
+                </v-col>
+
+                <v-col md="6" sm="12" cols="12">
+
+
+                <v-text-field
+                v-model="income_after_tax"
+                label="other"
+                type="number"
+                required
+                ></v-text-field>
+
+                </v-col>
+
+                </v-row>
+
+
+                <v-row>
+                    <v-col md="12" sm="12" cols="12">
+    
+                    <p class="font-weight-bold">Expenses (Savings)</p>
+    
+                    </v-col>
+                    <v-col md="6" sm="12" cols="12">
+    
+                    <v-text-field
+                    v-model="income_after_tax"
+                    label="Saving accounts contribution"
+                    type="number"
+                    required
+                    ></v-text-field>
+    
+                    </v-col>
+    
+                    <v-col md="6" sm="12" cols="12">
+    
+                    <v-text-field
+                    v-model="income_after_tax"
+                    label="Emergency Fund"
+                    type="number"
+                    required
+                    ></v-text-field>
+    
+                    </v-col>
+    
+                    <v-col md="6" sm="12" cols="12">
+    
+                    <v-text-field
+                    v-model="income_after_tax"
+                    label="Retirement"
+                    type="number"
+                    required
+                    ></v-text-field>
+    
+                    </v-col>
+    
+                    <v-col md="6" sm="12" cols="12">
+    
+                    <v-text-field
+                    v-model="income_after_tax"
+                    label="Credit card"
+                    type="number"
+                    required
+                    ></v-text-field>
+    
+                    </v-col>
+    
+    
+                    <v-col md="6" sm="12" cols="12">
+    
+    
+                    <v-text-field
+                    v-model="income_after_tax"
+                    label="Loans"
+                    type="number"
+                    required
+                    ></v-text-field>
+    
+                    </v-col>
+    
+                    <v-col md="6" sm="12" cols="12">
+    
+    
+                    <v-text-field
+                    v-model="income_after_tax"
+                    label="other savings"
+                    type="number"
+                    required
+                    ></v-text-field>
+    
+                    </v-col>
+    
+                    </v-row>
+
+                    <v-row>
+                        <v-col>
+                            <v-btn class="primary" dark>
+                                Pay 49 $ and see report
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+            
+            
+                
+            </v-form>
         </v-container>
       </v-main>
     </v-app>
