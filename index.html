@@ -1,460 +1,341 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 <body>
-  <div id="app">
-    <v-app>
-      <v-main>
-        <v-toolbar
-        class="primary px-15"
-        flat
-        dark
+<div id="app">
+<v-app>
+<v-main>
+<v-toolbar
+class="primary px-15"
+flat
+dark
 
-      >
-      <h3>Budget Calculator</h3>
-      </v-toolbar>
-        <v-container>
+>
+<h3>Budget Calculator</h3>
+</v-toolbar>
+<v-container>
 
-                <v-form
-                  ref="form"
-                  v-model="valid"
-                  lazy-validation
-                >
-                <v-row class="mt-3"> 
-                    <v-col md="6" sm="12" cols="12">
-                        <p class="font-weight-bold">Name</p>
-                        <v-text-field
-                        v-model="name"
-                        label="Enter your Name"
-                        required
-                      ></v-text-field>
-                    </v-col>
-               
-                    <v-col md="6" sm="12" cols="12">
-                        <p class="font-weight-bold">Age</p>
-                        <v-text-field
-                        v-model="age"
-                        label="Age"
-                        type="Enter your Age"
-                        required
-                      ></v-text-field>
+<v-form
+ref="form"
+v-model="valid"
+lazy-validation
+>
+<v-row class="mt-3"> 
+<v-col md="6" sm="12" cols="12">
+<p class="font-weight-bold">Name</p>
+<v-text-field v-model="name" label="Enter your Name" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<p class="font-weight-bold">Age</p>
+<v-text-field v-model="age" label="Age" type="Enter your Age" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<p class="font-weight-bold">Email</p>
+<v-text-field v-model="email" :rules="emailRules" label="Enter your Email" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<p class="font-weight-bold">City / State</p>
+<v-autocomplete v-model="city" :items="cities" item-text="city" item-value="city" :rules="[v => !!v || 'Item is required']" label="city" required></v-autocomplete>
+</v-col>
+</v-row>
+
+
+<v-row>
+
+<v-col md="2" sm="12" cols="12" class="mt-5">
+<p class="font-weight-bold">Financial Goals</p>
+</v-col>
+
+<v-col md="2" sm="12" cols="12">
+<v-checkbox v-model="financial_goals" label="eliminate debt" value="eliminate debt"></v-checkbox>
+</v-col>
+
+<v-col md="2" sm="12" cols="12">
+<v-checkbox v-model="financial_goals" label="build savings" value="build savings"></v-checkbox>
+
+</v-col>
+
+
+
+<v-col md="3" sm="12" cols="12">
+<v-checkbox v-model="financial_goals" label="build emergency fund" value="build emergency fund"></v-checkbox>    
+</v-col>
+
+
+</v-row>
+
+<v-row>
+    <v-col md="2"></v-col>
+    <v-col md="2" sm="12" cols="12">
+        <v-checkbox v-model="financial_goals" label="save for retirement" value="save for retirement"></v-checkbox>
+    </v-col>
+    <v-col md="3" sm="12" cols="12">
+        <v-checkbox v-model="financial_goals" label="budget for vacations/getaways" value="budget for vacations/getaways"></v-checkbox>
+    </v-col>
+
+</v-row>
+
+<v-row>
+
+<v-col>
+<p class="font-weight-bold">Budget experience</p>
+<v-slider v-model="be" :tick-labels="bes" min="1" max="5" step="1"></v-slider>
+</v-col>
+</v-row>
+
+<v-row class="mt-15">
+<v-col>
+<p class="font-weight-bold">Savings, debt, emergency funding, retirement knowledge</p>
+<v-slider v-model="knowledge" :tick-labels="bes" min="1" max="5"step="1"></v-slider>
+</v-col>
+</v-row>
+
+<v-row>
+<v-col md="12" sm="12" cols="12">
+<p class="font-weight-bold">Income</p>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="income_after_tax" label="Income after Tax" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="contribution" type="number" required
+label="401k contribution (amount taken out of monthly income that contributes to 401k)">
+</v-text-field>
+</v-col>
+
+</v-row>
+
+
+<v-row>
+<v-col md="12" sm="12" cols="12">
+
+<p class="font-weight-bold">Expenses (Needs)</p>
+
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="rent_modgadge" label="Rent / Modgadge" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="health_insurance" label="Health Insurance" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="car_auto_insurance" label="Car auto insurance" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="gas" label="Gas" type="number" required></v-text-field>
+</v-col>
+
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="utilities" label="Utilities" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="phone" label="Phone" type="number" required></v-text-field>
+</v-col>
+
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="minimum_car_payment" label="Minimum car paymnet" type="number" required></v-text-field>
+</v-col>
+
+</v-row>
+
+<v-row>
+
+<v-col md="12" sm="12" cols="12">
+<p class="font-weight-bold">Expenses (Wants)</p>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="resturants" label="Resturants" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="entertainment" label="Entertainment" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="subscriptions" label="Subscriptions" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="shopping" label="Shopping" type="number" required></v-text-field>
+</v-col>
+
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="cloths" label="cloths" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="other" label="other" type="number" required></v-text-field>
+</v-col>
+
+</v-row>
+
+<v-row>
+<v-col md="12" sm="12" cols="12">
+<p class="font-weight-bold">Expenses (Savings)</p>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="saving_accounts_contribution" label="Saving accounts contribution" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="emergency_fund" label="Emergency Fund" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="retirement" label="Retirement" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="credit_card" label="Credit card" type="number" required></v-text-field>
+</v-col>
+
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="loans" label="Loans" type="number" required></v-text-field>
+</v-col>
+
+<v-col md="6" sm="12" cols="12">
+<v-text-field v-model="other_savings" label="other savings" type="number" required></v-text-field>
+</v-col>
+
+</v-row>
+
+<v-row>
+<v-col>
+<v-btn class="primary" dark>
+Pay 49 $ and see report {{getNeedsTotal}}
+</v-btn>
+</v-col>
+</v-row>
+
+
+
+</v-form>
+</v-container>
+</v-main>
+</v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script>
+new Vue({
+el: '#app',
+vuetify: new Vuetify(),
+data :{
+
+name : '',
+email : '',
+age : '',
+city:'',
+
+financial_goals : [],
+knowledge : '',
+
+income_after_tax : '',
+contribution : '',
+
+
+rent_modgadge : 0,  
+health_insurance : 0, 
+car_auto_insurance : 0,
+gas : 0, 
+utilities : 0, 
+phone : 0, 
+minimum_car_payment : 0,
+
+resturants : 0, 
+entertainment : 0, 
+subscriptions : 0, 
+shopping : 0, 
+cloths : 0, 
+other : 0,
+
+saving_accounts_contribution : 0, 
+emergency_fund : 0, 
+retirement : 0, 
+credit_card : 0, 
+loans : 0, 
+other_savings : 0,
     
-                    </v-col>
-                    <v-col md="6" sm="12" cols="12">
-                        <p class="font-weight-bold">Email</p>
-                        <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
-                        label="Enter your Email"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                    <v-col md="6" sm="12" cols="12">
-                        <p class="font-weight-bold">City / State</p>
-                        <v-autocomplete
-                        v-model="city"
-                        :items="cities"
-                        item-text="city"
-                        item-value="city"
-                        :rules="[v => !!v || 'Item is required']"
-                        label="city"
-                        required
-                      ></v-autocomplete>
-                    </v-col>
-                </v-row>
+bes : ['1','2','3','4','5'],  
+be : '',
+cities : [
+{city:'city1'},
+{city:'city2'}
+],  
+valid : false,
+nameRules: [
+v => !!v || 'Name is required',
+],
+email: '',
+emailRules: [
+v => !!v || 'E-mail is required',
+v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+],
+},
 
+computed : {
 
-                <v-row>
-                    <v-col md="2" sm="12" cols="12" class="mt-5">
-                        <p class="font-weight-bold">Financial Goals</p>
-                    </v-col>
-                    <v-col md="2" sm="12" cols="12">
+        getNeedsTotal () {
 
-                    <v-checkbox v-model="eliminate_debt"
-                    label="eliminate debt"
-                    ></v-checkbox>
-                    <v-checkbox v-model="build_savings"
-                    label="build savings"
-                    ></v-checkbox>
-                    </v-col>
-                   
-                    <v-col md="3" sm="12" cols="12">
+          return (
+            parseInt(this.rent_modgadge) + 
+            parseInt(this.health_insurance) +
+            parseInt(this.car_auto_insurance) + 
+            parseInt(this.gas) + 
+            parseInt(this.utilities) + 
+            parseInt(this.phone) + 
+            parseInt(this.minimum_car_payment)
+            );
+        },
 
-                    <v-checkbox v-model="build_savings"
-                    label="build emergency fund"
-                    ></v-checkbox>
-                    <v-checkbox v-model="build_savings"
-                    label="save for retirement"
-                    ></v-checkbox>
-                    </v-col>
+        getWantsTotal () {
 
-                    <v-col md="3" sm="12" cols="12">
+        return (
+        parseInt(this.resturants) + 
+        parseInt(this.entertainment) +
+        parseInt(this.subscriptions) + 
+        parseInt(this.shopping) + 
+        parseInt(this.cloths) + 
+        parseInt(this.other) 
+        );
+        },
 
-                    <v-checkbox v-model="build_savings"
-                    label="budget for vacations/getaways"
-                    ></v-checkbox>
-                    </v-col>
+        getSavingsTotal () {
 
-                </v-row>
+        return (
+        parseInt(this.saving_accounts_contribution) + 
+        parseInt(this.emergency_fund) +
+        parseInt(this.retirement) + 
+        parseInt(this.credit_card) + 
+        parseInt(this.loans) + 
+        parseInt(this.other_savings) 
+        );
+        },
 
-                <v-row>
-                    <v-col>
-                        <p class="font-weight-bold">Budget experience</p>
-        
-                          <v-slider  
-                          v-model="be"
-                          :tick-labels="bes"
-                          min="1"
-                          max="5"
-                          step="1">
-                         
-                        </v-slider>
-        
-                    </v-col>
-                </v-row>
-                <v-row class="mt-15">
-                    <v-col>
-                        <p class="font-weight-bold">Savings, debt, emergency funding, retirement knowledge</p>
-        
-                          <v-slider  
-                          v-model="be"
-                          :tick-labels="bes"
-                          min="1"
-                          max="5"
-                          step="1">
-                         
-                        </v-slider>
-        
-                    </v-col>
-                </v-row>
-               
-                <v-row>
-                    <v-col md="12" sm="12" cols="12">
-                        <p class="font-weight-bold">Income</p>
-                    </v-col>
-
-                    <v-col md="6" sm="12" cols="12">
-                   
-                        <v-text-field
-                        v-model="income_after_tax"
-                        label="Income after Tax	"
-                        type="number"
-                        required
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col md="6" sm="12" cols="12">
-                   
-                        <v-text-field
-                        v-model="contribution"
-                        label="401k contribution (amount taken out of monthly income that contributes to 401k)		"
-                        type="number"
-                        required
-                      ></v-text-field>
-
-                    </v-col>
-                    
-                </v-row>
-
-               
-                <v-row>
-                    <v-col md="12" sm="12" cols="12">
-                   
-                        <p class="font-weight-bold">Expenses (Needs)</p>
-
-                    </v-col>
-                    <v-col md="6" sm="12" cols="12">
-                   
-                        <v-text-field
-                        v-model="income_after_tax"
-                        label="Rent / Modgadge"
-                        type="number"
-                        required
-                      ></v-text-field>
-
-                    </v-col>
-
-                    <v-col md="6" sm="12" cols="12">
-                   
-                        <v-text-field
-                        v-model="income_after_tax"
-                        label="Health Insurance"
-                        type="number"
-                        required
-                      ></v-text-field>
-
-                    </v-col>
-
-                    <v-col md="6" sm="12" cols="12">
-                   
-                        <v-text-field
-                    v-model="income_after_tax"
-                    label="Car auto insurance"
-                    type="number"
-                    required
-                  ></v-text-field>
-
-                    </v-col>
-
-                    <v-col md="6" sm="12" cols="12">
-                   
-                        <v-text-field
-                        v-model="income_after_tax"
-                        label="Gas"
-                        type="number"
-                        required
-                      ></v-text-field>
-
-                    </v-col>
-
-
-                    <v-col md="6" sm="12" cols="12">
-                   
-                      
-                    <v-text-field
-                    v-model="income_after_tax"
-                    label="Utilities"
-                    type="number"
-                    required
-                    ></v-text-field>
-
-                    </v-col>
-
-                    <v-col md="6" sm="12" cols="12">
-                   
-                      
-                        <v-text-field
-              v-model="income_after_tax"
-              label="Phone"
-              type="number"
-              required
-            ></v-text-field>
-    
-                        </v-col>
-
-
-                        <v-col md="6" sm="12" cols="12">
-                   
-                            <v-text-field
-                            v-model="income_after_tax"
-                            label="Minimum car paymnet	"
-                            type="number"
-                            required
-                          ></v-text-field>
-                
-                        
-                            </v-col>
-
-                </v-row>
-            
-                <v-row>
-                <v-col md="12" sm="12" cols="12">
-
-                <p class="font-weight-bold">Expenses (Wants)</p>
-
-                </v-col>
-                <v-col md="6" sm="12" cols="12">
-
-                <v-text-field
-                v-model="income_after_tax"
-                label="Resturants"
-                type="number"
-                required
-                ></v-text-field>
-
-                </v-col>
-
-                <v-col md="6" sm="12" cols="12">
-
-                <v-text-field
-                v-model="income_after_tax"
-                label="Entertainment"
-                type="number"
-                required
-                ></v-text-field>
-
-                </v-col>
-
-                <v-col md="6" sm="12" cols="12">
-
-                <v-text-field
-                v-model="income_after_tax"
-                label="Subscriptions"
-                type="number"
-                required
-                ></v-text-field>
-
-                </v-col>
-
-                <v-col md="6" sm="12" cols="12">
-
-                <v-text-field
-                v-model="income_after_tax"
-                label="Shopping"
-                type="number"
-                required
-                ></v-text-field>
-
-                </v-col>
-
-
-                <v-col md="6" sm="12" cols="12">
-
-
-                <v-text-field
-                v-model="income_after_tax"
-                label="Cloths"
-                type="number"
-                required
-                ></v-text-field>
-
-                </v-col>
-
-                <v-col md="6" sm="12" cols="12">
-
-
-                <v-text-field
-                v-model="income_after_tax"
-                label="other"
-                type="number"
-                required
-                ></v-text-field>
-
-                </v-col>
-
-                </v-row>
-
-
-                <v-row>
-                    <v-col md="12" sm="12" cols="12">
-    
-                    <p class="font-weight-bold">Expenses (Savings)</p>
-    
-                    </v-col>
-                    <v-col md="6" sm="12" cols="12">
-    
-                    <v-text-field
-                    v-model="income_after_tax"
-                    label="Saving accounts contribution"
-                    type="number"
-                    required
-                    ></v-text-field>
-    
-                    </v-col>
-    
-                    <v-col md="6" sm="12" cols="12">
-    
-                    <v-text-field
-                    v-model="income_after_tax"
-                    label="Emergency Fund"
-                    type="number"
-                    required
-                    ></v-text-field>
-    
-                    </v-col>
-    
-                    <v-col md="6" sm="12" cols="12">
-    
-                    <v-text-field
-                    v-model="income_after_tax"
-                    label="Retirement"
-                    type="number"
-                    required
-                    ></v-text-field>
-    
-                    </v-col>
-    
-                    <v-col md="6" sm="12" cols="12">
-    
-                    <v-text-field
-                    v-model="income_after_tax"
-                    label="Credit card"
-                    type="number"
-                    required
-                    ></v-text-field>
-    
-                    </v-col>
-    
-    
-                    <v-col md="6" sm="12" cols="12">
-    
-    
-                    <v-text-field
-                    v-model="income_after_tax"
-                    label="Loans"
-                    type="number"
-                    required
-                    ></v-text-field>
-    
-                    </v-col>
-    
-                    <v-col md="6" sm="12" cols="12">
-    
-    
-                    <v-text-field
-                    v-model="income_after_tax"
-                    label="other savings"
-                    type="number"
-                    required
-                    ></v-text-field>
-    
-                    </v-col>
-    
-                    </v-row>
-
-                    <v-row>
-                        <v-col>
-                            <v-btn class="primary" dark>
-                                Pay 49 $ and see report
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-            
-            
-                
-            </v-form>
-        </v-container>
-      </v-main>
-    </v-app>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-  <script>
-    new Vue({
-      el: '#app',
-      vuetify: new Vuetify(),
-      data :{
-
-        bes : ['1','2','3','4','5'],  
-        be : '',
-        name : '',
-        email : '',
-        age : '',
-        city:'',
-        cities : [
-            {city:'city1'},
-            {city:'city2'}
-            ],  
-        valid : false,
-        nameRules: [
-        v => !!v || 'Name is required',
-      ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      },
-      methods: {
-     
-    },
-    })
-  </script>
+},
+})
+</script>
 </body>
 </html>
