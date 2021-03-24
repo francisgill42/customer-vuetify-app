@@ -222,9 +222,7 @@ label="401k contribution (amount taken out of monthly income that contributes to
 
 <v-row>
 <v-col>
-<v-btn class="primary" dark @click="CheckNeed">
-Pay 49 $ and see report
-</v-btn>
+<v-btn class="primary" dark @click="submit">Pay 49 $ and see report</v-btn>
 </v-col>
 </v-row>
 
@@ -244,23 +242,37 @@ Pay 49 $ and see report
             <p class="font-weight-bold">Your needs should be : {{need_should_be}}</p>
         </v-col>             
         <v-col md="12" sm="12" cols="12">
-            <p class="font-weight-bold">Your actual needs : {{getNeedsTotal}} </p>
+            <p class="font-weight-bold">Your actual needs : {{getNeedsTotal > 0 ? getNeedsTotal : '' }} </p>
         </v-col>   
        
         <v-col md="12" sm="12" cols="12">
-            <p class="font-weight-bold">your rent/modgadge and utilities are {{rent_modgadge + utilities}}</p>
+            <p class="font-weight-bold">your rent/modgadge and utilities are {{n1_n2}}</p>
         </v-col>   
         <v-col md="12" sm="12" cols="12">
-            <p class="font-weight-bold">Suggestion : {{suggestion1}}</p>
+            <p class="font-weight-bold">Suggestion for Needs : {{suggestion1}}</p>
         </v-col>   
         <v-col md="12" sm="12" cols="12">
-            <p class="font-weight-bold">Suggestion : {{suggestion2}}</p>
+            <p class="font-weight-bold">Suggestion for Needs : {{suggestion2}}</p>
         </v-col>  
         
         <v-col md="12" sm="12" cols="12">
-            <p class="font-weight-bold">Suggestion : {{suggestion3}}</p>
-        </v-col>  
-     </v-row>
+            <p class="font-weight-bold">Suggestion for Needs : {{suggestion3}}</p>
+        </v-col> 
+        
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Suggestion for Wants : {{suggestion4}}</p>
+        </v-col> 
+    
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Suggestion for Savings : {{suggestion5}}</p>
+        </v-col> 
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Suggestion for Savings : {{suggestion6}}</p>
+        </v-col>          
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Suggestion for Savings : {{suggestion7}}</p>
+        </v-col>     
+    </v-row>
 
      
    </v-container>
@@ -299,6 +311,8 @@ knowledge : '',
 
 income_after_tax : null,
 need_should_be : null,
+wants_should_be : null,
+savings_should_be : null,
 contribution : '',
 
 
@@ -351,26 +365,29 @@ NeedMsg : null,
 suggestion1 : null,
 suggestion2 : null,
 suggestion3 : null,
+suggestion4 : null,
+suggestion5 : null,
+suggestion6 : null,
+suggestion7 : null,
 
 },
 
 methods : {
-    CheckNeed (){   
+    submit (){   
 
 
+            // Needs Section Starts
             this.need_should_be = this.income_after_tax / 2 ; 
-            
-            // compare needs with e1 if needs > e1 good if needs < e1 reduce rour needs else your values are ideal
             
             if(this.income_after_tax !== null){
                 if(this.need_should_be > this.getNeedsTotal){
-                    this.suggestion1 = 'good';
+                    this.suggestion1 = 'your needs are good';
                 }
                 else if (this.need_should_be < this.getNeedsTotal ){
                     this.suggestion1 = 'reduce your needs';
                 }
                 else{
-                    this.suggestion1 = 'your values are ideal';
+                    this.suggestion1 = 'your needs are ideal';
                 }
 
                 
@@ -381,13 +398,13 @@ methods : {
                 this.n1_n2 = parseInt(this.rent_modgadge) + parseInt(this.utilities);
 
                 if(this.n1_n2 > this.thirtyPercent){
-                this.suggestion2  = 'we need to reduce it';
+                this.suggestion2  = 'Rent/Modgadge + utilities are needs to be reduce';
                 }
                 else if(this.n1_n2 < this.thirtyPercent){
-                this.suggestion2  = 'we are good';
+                this.suggestion2  = 'Rent/Modgadge + utilities are good';
                 }
                 else{
-                this.suggestion2 = 'ideal';
+                this.suggestion2 = 'Rent/Modgadge + utilities are ideal';
                 }
 
 
@@ -396,14 +413,100 @@ methods : {
                 this.nn1_nn2_nn3 = parseInt(this.car_auto_insurance) + parseInt(this.gas) +parseInt(this.minimum_car_payment);
 
                 if(this.nn1_nn2_nn3 > this.twentyPercent){
-                    this.suggestion3 = 'need to reduce car & gass consumptions';
+                    this.suggestion3 = 'car auto insurance + gas + minimum car payment need to be reduced';
                 }
                 else if(this.nn1_nn2_nn3 < this.twentyPercent){
-                    this.suggestion3 = 'car & gass consumptions is good';
+                    this.suggestion3 = 'car auto insurance + gas + minimum car payment is good';
                 }
                 else{
-                    this.suggestion3 = 'car & gass use is ideal';
+                    this.suggestion3 = 'car auto insurance + gas + minimum car payment is ideal';
                 }
+                // Needs section ends
+
+                //  Wants section Starts
+                
+
+                // Wants = a * 0.3
+                // compare wants with e2
+
+
+                this.wants_should_be = this.income_after_tax * 0.3
+
+                if(this.wants_should_be > this.getWantsTotal){
+                    this.suggestion4 = 'Wants are good';
+                }
+                else if(this.wants_should_be < this.getWantsTotal) {
+                    this.suggestion4 = 'reduce your Wants';
+                }
+                else{
+                    this.suggestion4 = 'Wants are ideal';
+                
+                }
+
+                
+
+                //  Wants section ends
+
+
+
+
+                
+                //  Wants section Starts
+                
+
+                // Wants = a * 0.3
+                // compare wants with e2
+
+
+                this.savings_should_be = this.income_after_tax * 0.2
+
+                this.fivePercent = (this.income_after_tax * 5) / 100;
+
+                if(this.emergency_fund > this.fivePercent){
+                    this.suggestion5 = 'Emergency funds are good';
+                }
+                else if(this.emergency_fund < this.fivePercent){
+                    this.suggestion5 = 'Emergency funds needs to saved more';
+                }
+
+                else{
+                    this.suggestion5 = 'Emergency funds are ideal';
+                
+                }
+                
+                
+                this.tenPercent = (this.income_after_tax * 10) / 100;
+
+                if(this.retirement > this.tenPercent){
+                    this.suggestion6 = 'Emergency funds are good';
+                }
+                else if(this.retirement < this.tenPercent){
+                    this.suggestion6 = 'Emergency funds needs to saved more';
+                }
+
+                else{
+                    this.suggestion6 = 'Emergency funds are ideal';
+                
+                }
+
+
+                if(this.savings_should_be > this.getSavingsTotal){
+                    this.suggestion7 = 'save more';
+                }
+                else if(this.retirement < this.tenPercent){
+                    this.suggestion7 = 'savings are good';
+                }
+
+                else{
+                    this.suggestion7 = 'savings are ideal';
+                
+                }
+                
+
+                //  Wants section ends
+                
+
+
 
 
         },
