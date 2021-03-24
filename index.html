@@ -19,7 +19,7 @@ dark
 <h3>Budget Calculator</h3>
 </v-toolbar>
 <v-container>
-
+ 
 <v-form
 ref="form"
 v-model="valid"
@@ -222,11 +222,56 @@ label="401k contribution (amount taken out of monthly income that contributes to
 
 <v-row>
 <v-col>
-<v-btn class="primary" dark>
-Pay 49 $ and see report {{getNeedsTotal}}
+<v-btn class="primary" dark @click="CheckNeed">
+Pay 49 $ and see report
 </v-btn>
 </v-col>
 </v-row>
+
+<v-card class="mt-5">
+   <v-container>
+    <v-row>
+
+        <v-col md="12" sm="12" cols="12">
+            <p class="title">Dear {{name}}</p>
+        </v-col>
+
+      
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Your income : {{income_after_tax}}</p>
+        </v-col>
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Your needs should be : {{need_should_be}}</p>
+        </v-col>             
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Your actual needs : {{getNeedsTotal}} </p>
+        </v-col>   
+       
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">your rent/modgadge and utilities are {{rent_modgadge + utilities}}</p>
+        </v-col>   
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Suggestion : {{suggestion1}}</p>
+        </v-col>   
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Suggestion : {{suggestion2}}</p>
+        </v-col>  
+        
+        <v-col md="12" sm="12" cols="12">
+            <p class="font-weight-bold">Suggestion : {{suggestion3}}</p>
+        </v-col>  
+     </v-row>
+
+     
+   </v-container>
+    
+</v-card>
+
+<!-- <v-row >
+    <v-col v-if="NeedMsg">
+        Result : {{NeedMsg}}
+    </v-col>
+</v-row> -->
 
 
 
@@ -252,7 +297,8 @@ city:'',
 financial_goals : [],
 knowledge : '',
 
-income_after_tax : '',
+income_after_tax : null,
+need_should_be : null,
 contribution : '',
 
 
@@ -293,21 +339,89 @@ emailRules: [
 v => !!v || 'E-mail is required',
 v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
 ],
+
+twentyPercent : null,
+thirtyPercent : null,
+
+n1_n2 : null,
+nn1_nn2_nn3 : null,
+
+
+NeedMsg : null,
+suggestion1 : null,
+suggestion2 : null,
+suggestion3 : null,
+
+},
+
+methods : {
+    CheckNeed (){   
+
+
+            this.need_should_be = this.income_after_tax / 2 ; 
+            
+            // compare needs with e1 if needs > e1 good if needs < e1 reduce rour needs else your values are ideal
+            
+            if(this.income_after_tax !== null){
+                if(this.need_should_be > this.getNeedsTotal){
+                    this.suggestion1 = 'good';
+                }
+                else if (this.need_should_be < this.getNeedsTotal ){
+                    this.suggestion1 = 'reduce your needs';
+                }
+                else{
+                    this.suggestion1 = 'your values are ideal';
+                }
+
+                
+            }
+
+                this.thirtyPercent = (this.income_after_tax * 30) / 100;
+
+                this.n1_n2 = parseInt(this.rent_modgadge) + parseInt(this.utilities);
+
+                if(this.n1_n2 > this.thirtyPercent){
+                this.suggestion2  = 'we need to reduce it';
+                }
+                else if(this.n1_n2 < this.thirtyPercent){
+                this.suggestion2  = 'we are good';
+                }
+                else{
+                this.suggestion2 = 'ideal';
+                }
+
+
+                this.twentyPercent = (this.income_after_tax * 20) / 100;
+
+                this.nn1_nn2_nn3 = parseInt(this.car_auto_insurance) + parseInt(this.gas) +parseInt(this.minimum_car_payment);
+
+                if(this.nn1_nn2_nn3 > this.twentyPercent){
+                    this.suggestion3 = 'need to reduce car & gass consumptions';
+                }
+                else if(this.nn1_nn2_nn3 < this.twentyPercent){
+                    this.suggestion3 = 'car & gass consumptions is good';
+                }
+                else{
+                    this.suggestion3 = 'car & gass use is ideal';
+                }
+
+
+        },
 },
 
 computed : {
 
         getNeedsTotal () {
 
-          return (
-            parseInt(this.rent_modgadge) + 
-            parseInt(this.health_insurance) +
-            parseInt(this.car_auto_insurance) + 
-            parseInt(this.gas) + 
-            parseInt(this.utilities) + 
-            parseInt(this.phone) + 
-            parseInt(this.minimum_car_payment)
-            );
+        return (
+        parseInt(this.rent_modgadge) + 
+        parseInt(this.health_insurance) +
+        parseInt(this.car_auto_insurance) + 
+        parseInt(this.gas) + 
+        parseInt(this.utilities) + 
+        parseInt(this.phone) + 
+        parseInt(this.minimum_car_payment)
+        );
         },
 
         getWantsTotal () {
